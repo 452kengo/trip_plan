@@ -1,0 +1,56 @@
+<h2>gmap</h2>
+
+<input id="address" type="textbox" value="">
+<input type="button" value="Encode" onclick="codeAddress()">
+
+<div id="display">緯度・経度を表示します</div>
+
+<div id='map'></div>
+
+<style>
+#map {
+  height: 600px;
+  width: 600px;
+}
+</style>
+
+<script>
+let map
+let geocoder
+
+const display = document.getElementById('display')
+
+function initMap(){
+  geocoder = new google.maps.Geocoder()
+
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 35.6761919, lng: 139.6503106},
+    zoom: 10,
+  });
+
+  marker = new google.maps.Marker({
+    position:  {lat: 35.6761919, lng: 139.6503106},
+    map: map
+  });
+}
+
+function codeAddress(){
+  let inputAddress = document.getElementById('address').value;
+
+  geocoder.geocode( { 'address': inputAddress}, function(results, status) {
+    if (status == 'OK') {
+      map.setCenter(results[0].geometry.location);
+      var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+      });
+      
+      display.textContent = "検索結果：" + results[ 0 ].geometry.location
+    } else {
+      alert('該当する結果がありませんでした：' + status);
+    }
+  });   
+}
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key= <%= ENV['API_KEY'] %> &callback=initMap" async defer></script>
