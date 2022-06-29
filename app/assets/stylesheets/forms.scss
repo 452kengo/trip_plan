@@ -1,0 +1,19 @@
+div.field {
+  @extend .form-group !optional;
+
+  input[type="text"],
+  textarea,
+  select,
+  input[type="email"],
+  input[type="password"] {
+    @extend .form-control !optional;
+  }
+}
+
+div.actions {
+  input[type="submit"] {
+    @extend .my-2 !optional;
+    @extend .btn !optional;
+    @extend .btn-primary !optional;
+  }
+}
