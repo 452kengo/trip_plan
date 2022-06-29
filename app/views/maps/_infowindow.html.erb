@@ -1,0 +1,7 @@
+<div id="info-window-name">
+  <%= link_to "#{place.name}", place %>
+</div>
+<div id="info-wondow-btn">
+  <%= button_tag "経路に追加", id: "btn-add", class: "btn btn-primary btn-sm", 
+    onclick: "addPlace('#{place.name}',#{place.latitude}, #{place.longitude})" %>
+</div>
