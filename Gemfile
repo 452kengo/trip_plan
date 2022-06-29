@@ -65,6 +65,9 @@ gem 'dotenv-rails'
 
 gem 'gmaps4rails'
 
- # Bootstrap4 and jQuery
-  gem 'bootstrap', '~> 4.3.1'
-  gem 'jquery-rails'
+# Bootstrap4 and jQuery
+gem 'bootstrap', '~> 4.3.1'
+gem 'jquery-rails'
+  
+# devise
+gem 'devise', '~> 4.2'
