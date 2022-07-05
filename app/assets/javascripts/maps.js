@@ -26,8 +26,6 @@ function isExistList(li) {
 var rendererOptions = {
     suppressMarkers : true
 }
-var directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
-var directionsService = new google.maps.DirectionsService();
 
 // 複数地点のルートを検索する
 function search() {
@@ -52,16 +50,21 @@ function search() {
         }
         // リクエスト作成
         var request = {
-            origin:      origin,
+            origin: origin,
             destination: destination,
             waypoints: waypoints,
-            travelMode:  google.maps.TravelMode.DRIVING
+            travelMode: google.maps.TravelMode.DRIVING
         };
         // ルートサービスのリクエスト
-        directionsService.route(request, function(response, status) {
+        new google.maps.DirectionsService().route(request, function(response, status) {
             if (status == google.maps.DirectionsStatus.OK) {
                 // 結果を表示する
-                directionsDisplay.setDirections(response);
+                new google.maps.DirectionsRenderer().setDirections(response);
+                var data = response.routes[0].legs;
+                for (var i = 0; i < data.length; i++) {
+                    console.log(data[i].distance.text);
+                    console.log(data[i].duration.text);
+                }
             }
         });
     }

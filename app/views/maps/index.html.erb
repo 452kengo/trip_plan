@@ -2,10 +2,11 @@
   <div id="map" class="map-canvas"></div>
   <div class="map-route">
     <ul id="route-list" class="list-group"></ul>
+    <div class="map-search">
+      <%= button_tag "ルート検索", id: "btn-search", class: "btn btn-primary", onclick: "search()" %>
+    </div>
   </div>
-  <div class="map-search">
-    <%= button_tag "ルート検索", id: "btn-search", class: "btn btn-primary", onclick: "search()" %>
-  </div>
+  
 </div>
 
 <script type="text/javascript">
@@ -17,6 +18,6 @@
       handler.getMap().setCenter(new google.maps.LatLng(35.679899, 139.762507));
       handler.getMap().setZoom(12);
       handler.getMap().setOptions({ draggableCursor: "default" });
-      directionsDisplay.setMap(handler.getMap());
+      new google.maps.DirectionsRenderer().setMap(handler.getMap());
     });
 </script>

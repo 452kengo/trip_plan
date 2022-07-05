@@ -64,6 +64,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'dotenv-rails'
 
 gem 'gmaps4rails'
+gem 'geocoder'
 
 # Bootstrap4 and jQuery
 gem 'bootstrap', '~> 4.3.1'
@@ -71,3 +72,8 @@ gem 'jquery-rails'
   
 # devise
 gem 'devise', '~> 4.2'
+
+gem 'gon'
+
+# manage sort order
+gem 'acts_as_list', '~> 0.9.19'
