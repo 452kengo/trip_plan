@@ -1,42 +1,75 @@
 .map-container {
-    position: relative;
+    display:flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    justify-content: space-between;
     width: 100%;
-    margin-bottom: 20px;
-    padding-bottom: 56.25%;
 }
 
+// 地図================================
 .map-canvas {
-    position: absolute;
+    position: relative;
     top: 0;
-    right: 40%;
+    right: 0;
     bottom: 0;
     left: 0;
     margin: 0;
     padding: 0;
-    width: 500px;
-    height: 550px;
+    width: 600px;
+    height: 620px;
 }
 
-.map-route {
+// 検索窓==============================
+#spot-search {
     overflow: scroll;
-    position: absolute;
+    position: relative;
     top: 0;
-    right: 0;
-    bottom: 54px;
-    left: 50%;
-    margin: 0;
-    padding: 10px;
-    height: 550px;
-}
-
-.map-search {
-    position: absolute;
-    height: 54px;
     right: 0;
     bottom: 0;
     left: 0;
     margin: 0;
     padding: 10px;
+    width: 430px;
+    height: 620px;
+    background-color: #F3FFD8;
+}
+
+#address {
+    background-color: #FFF;
+    border: solid 2px #33CC99;
+    padding: 5px;
+    width: 85%;
+}
+
+#btn-spot {
+    background-color: #33CC99;
+    color: #FFF;
+    padding: 5px;
+}
+
+// ルート==============================
+#map-route {
+    overflow: scroll;
+    position: relative;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    padding: 10px;
+    width: 470px;
+    height: 620px;
+    background-color: #FFCC66;
+}
+
+#map-search {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    padding: 10px;
+    height: 54px;
 }
 
 .list-group-item {

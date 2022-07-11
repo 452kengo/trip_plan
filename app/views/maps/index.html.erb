@@ -1,12 +1,15 @@
 <div class="map-container">
   <div id="map" class="map-canvas"></div>
-  <div class="map-route">
+  <div id="spot-search">
+    <input id="address" class="controls" type="text" value="" placeholder="行きたい場所を検索"/>
+    <button type="button" id="btn-spot" value="" onclick="codeAddress()">検索</button>
+  </div>
+  <div id="map-route">
     <ul id="route-list" class="list-group"></ul>
-    <div class="map-search">
+    <div id="map-search">
       <%= button_tag "ルート検索", id: "btn-search", class: "btn btn-primary", onclick: "search()" %>
     </div>
   </div>
-  
 </div>
 
 <script type="text/javascript">
