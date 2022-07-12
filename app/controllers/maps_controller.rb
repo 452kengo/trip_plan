@@ -1,6 +1,7 @@
 class MapsController < ApplicationController
     def index
         @places = Place.all
+        gon.place = @places
         @hash = Gmaps4rails.build_markers(@places) do |place, marker|
             marker.lat place.latitude
             marker.lng place.longitude

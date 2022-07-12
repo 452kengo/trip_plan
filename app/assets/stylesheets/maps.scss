@@ -19,6 +19,14 @@
     height: 620px;
 }
 
+// 情報ウィンドウ
+#btn-add {
+    background-color: #33CC99;
+    color: #FFF;
+    padding: 5px;
+    margin: 5px;
+}
+
 // 検索窓==============================
 #spot-search {
     overflow: scroll;
@@ -74,4 +82,8 @@
 
 .list-group-item {
     position: absolute;
+}
+
+#distance-time {
+    
 }
