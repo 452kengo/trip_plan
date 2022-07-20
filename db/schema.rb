@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_29_061124) do
+ActiveRecord::Schema.define(version: 2022_07_13_071623) do
+
+  create_table "maps", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.text "address"
+    t.float "latitude"
+    t.float "longitude"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "places", force: :cascade do |t|
     t.string "name"
@@ -19,6 +29,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_061124) do
     t.float "longitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "address"
   end
 
   create_table "users", force: :cascade do |t|

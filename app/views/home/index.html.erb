@@ -17,8 +17,13 @@
                 <p>地図に目的地のピンが立つので移動のイメージがしやすいです。</p>    
             </div>
             <div id="new">
-                <h1>プランを作成！</h1>
-                <button type="button" id="btn-new" class="btn btn-primary", onclick="location.href='maps/index';">新規作成</button>
+                <%  if user_signed_in?  %>
+                    <h1>プランを作成！</h1>
+                    <button type="button" id="btn-new" class="btn", onclick="location.href='maps/index';">新規作成</button>
+                <% else %>
+                    <h1>まずはログイン</h1>
+                    <button type="button" id="btn-login" class="btn", onclick="location.href='maps/index';">ログイン</button>
+                <% end %>
             </div>
         </div>
     </div>
