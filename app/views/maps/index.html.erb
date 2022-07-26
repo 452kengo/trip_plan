@@ -37,7 +37,6 @@
 var map
 var geocoder
 var marker = [];
-var myLatLng
 var infoWindow = [];
 var markerData = gon.place; // コントローラーで定義したインスタンス変数を変数に代入
 var place_name = [];
@@ -109,15 +108,19 @@ function markerEvent(i) {
 
 function codeAddress() {
     let inputAddress = document.getElementById('address').value;
+    var latLngInput = new google.maps.LatLng(place_lat.value, place_lng.value);
 
     geocoder.geocode({
-      'address': inputAddress
+      'address': inputAddress,
+      latLng: latLngInput
     }, function (results, status) {
+      var address = "";
       if (status == 'OK') {
         map.setCenter(results[0].geometry.location);
         place_result = results[0].geometry.location;
         place_lat.value = place_result.lat();
         place_lng.value = place_result.lng();
+        address = results[0].formatted_address;
         var marker = new google.maps.Marker({
           map: map,
           position: results[0].geometry.location
@@ -130,6 +133,8 @@ function codeAddress() {
         latitude.setAttribute("value", place_lat.value);
         let longitude = document.getElementById('spot-longitude');
         longitude.setAttribute("value", place_lng.value);
+        document.getElementById('spot-address').value = address;
+
       } else {
         alert('該当する結果がありませんでした' + status);
       }
