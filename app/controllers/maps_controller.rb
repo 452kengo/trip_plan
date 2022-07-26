@@ -15,7 +15,6 @@ class MapsController < ApplicationController
     def create
         @place = Place.new(place_params)
         if @place.save
-            redirect_to maps_url
             address = params[:name][:map][:address]
             latitude = params[:name][:map][:latitude]
             longitude = params[:name][:map][:longitude]
@@ -27,6 +26,7 @@ class MapsController < ApplicationController
               )
               @map.save
             end
+            redirect_to maps_index_path
         else
             @places = Place.all
             render 'maps/index'

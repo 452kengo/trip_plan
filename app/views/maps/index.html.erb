@@ -12,8 +12,8 @@
         <%= f.text_field :name, id:"spot-name" %>
         <br>
         <%= f.text_field :address, id:"spot-address" %>
-        <%= f.text_field :latitude %>
-        <%= f.text_field :longitude %>
+        <%= f.hidden_field :latitude, id:"spot-latitude" %>
+        <%= f.hidden_field :longitude,id:"spot-longitude" %>
         <%= f.fields_for :map, @map do |map| %>
           <%= map.hidden_field :latitude %>
           <%= map.hidden_field :longitude %>
@@ -126,6 +126,10 @@ function codeAddress() {
         // タイトルフォームにデフォルト値として検索値を設定
         let name = document.getElementById('spot-name');
         name.setAttribute("value", inputAddress);
+        let latitude = document.getElementById('spot-latitude');
+        latitude.setAttribute("value", place_lat.value);
+        let longitude = document.getElementById('spot-longitude');
+        longitude.setAttribute("value", place_lng.value);
       } else {
         alert('該当する結果がありませんでした' + status);
       }
