@@ -1,12 +1,10 @@
 class MapsController < ApplicationController
     before_action :authenticate_user!
     def index
-        @map = Map.new
-        @maps = Map.all
-        
-        @place = Place.all
-        gon.place = @place
-        @hash = Gmaps4rails.build_markers(@place) do |place, marker|
+        @place = Place.new
+        @places = Place.all
+        gon.place = @places
+        @hash = Gmaps4rails.build_markers(@places) do |place, marker|
             marker.lat place.latitude
             marker.lng place.longitude
             marker.infowindow render_to_string( partial: "maps/infowindow",
@@ -15,11 +13,22 @@ class MapsController < ApplicationController
     end
     
     def create
-        @map = Map.new(map_params)
-        if @map.save
+        @place = Place.new(place_params)
+        if @place.save
             redirect_to maps_url
+            address = params[:name][:map][:address]
+            latitude = params[:name][:map][:latitude]
+            longitude = params[:name][:map][:longitude]
+            unless latitude.empty && longitude.empty?
+              @map = @place.build_map(
+                address: address,
+                latitude: latitude,
+                longitude: longitude
+              )
+              @map.save
+            end
         else
-            @maps = Map.all
+            @places = Place.all
             render 'maps/index'
         end
     end
@@ -28,7 +37,7 @@ class MapsController < ApplicationController
     private
     
     # ストロングパラメーター
-    def map_params
-        params.require(:map).permit(:name, :address, :description, :latitude, :longitude)
+    def place_params
+        params.require(:place).permit(:name, :address, :latitude, :longitude)
     end
 end

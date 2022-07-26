@@ -4,6 +4,12 @@ class PlacesController < ApplicationController
   # GET /places or /places.json
   def index
     @places = Place.all
+    @hash = Gmaps4rails.build_markers(@places) do |place, marker|
+      marker.lat place.latitude
+      marker.lng place.longitude
+      marker.infowindow render_to_string( partial: "maps/infowindow",
+                                          locals: {place:place} )
+    end
   end
 
   # GET /places/1 or /places/1.json
@@ -65,6 +71,6 @@ class PlacesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def place_params
-      params.require(:place).permit(:name, :description, :latitude, :longitude)
+      params.require(:place).permit(:name, :address, :description, :latitude, :longitude)
     end
 end

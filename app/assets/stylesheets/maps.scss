@@ -68,10 +68,10 @@
     margin: 5px;
     padding: 8px;
 }
-.spot-name{
-    
+#spot-name{
+    font-weight: bold;
 }
-.spot-save{
+#spot-save{
     background-color: #33CC99;
     position: absolute;
     right: 5px;
@@ -108,6 +108,12 @@
 
 .list-group-item {
     position: absolute;
+}
+
+#route-spot {
+    background-color: #F3FFD8;
+    border: 2px solid #33CC99;
+    margin: 1px;
 }
 
 #distance-time {

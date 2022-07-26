@@ -2,62 +2,69 @@
   <div id="map" class="map-canvas"></div>
   <div id="spot-search">
     <div id="spot-search-top">
-      <input id="address" type="textbox" value="Sydney, NSW">
-      <input type="button" value="検索" onclick="codeAddress()">
+      <input id="address" type="textbox" placeholder="行きたい場所を検索">
+      <input id="btn-spot" type="button" value="検索" onclick="codeAddress()">
     </div>
-    <!--<button type="button" id="btn-spot-add" class="btn btn-primary", onclick="location.href='/places#index';">場所を追加</button>-->
+    <button type="button" id="btn-spot-add" class="btn btn-primary", onclick="location.href='/places#index';">場所を追加</button>
     <!-- 地図情報を保存するフォーム -->
     <div id="spot-form">
-      <%= form_for @map do |f| %>
-        <!-- 検索値を隠しデータとして送信-->
-        <input type="hidden" name="map[address]" id="hidden_address">
-        <%= f.text_field :name, class: "spot-name" %>
-        <%= f.submit "保存", class: "spot-save" %>
+      <%= form_for @place do |f| %>
+        <%= f.text_field :name, id:"spot-name" %>
+        <br>
+        <%= f.text_field :address, id:"spot-address" %>
+        <%= f.text_field :latitude %>
+        <%= f.text_field :longitude %>
+        <%= f.fields_for :map, @map do |map| %>
+          <%= map.hidden_field :latitude %>
+          <%= map.hidden_field :longitude %>
+        <% end %>
+        <%= f.submit "保存", id:"spot-save" %>
       <% end %>
     </div>
+    <a id="del" type="button" class="btn marker-delete right" onclick="deleteMarker()"></i>マーカー削除</a>
   </div>
   <div id="map-route">
     <ul id="route-list" class="list-group"></ul>
     <div id="map-search">
       <%= button_tag "ルート検索", id: "btn-search", class: "btn btn-primary", onclick: "search()" %>
     </div>
+    <%= render @places %>
     <div id="distance-time"></div>
   </div>
-  <%= render @maps %>
 </div>
 
 <script>
 var map
-var maps
 var geocoder
-var marker
+var marker = [];
+var myLatLng
 var infoWindow = [];
 var markerData = gon.place; // コントローラーで定義したインスタンス変数を変数に代入
 var place_name = [];
 var place_lat = [];
 var place_lng = [];
+var place_result
 
 // GoogleMapを表示する関数(callback処理で呼び出される)
 function initMap(){
     geocoder = new google.maps.Geocoder()
     // ビューのid='map_index'の部分にGoogleMapを埋め込む
-    mapInstance = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('map'), {
       center: { lat: 35.6585, lng: 139.7486 }, // 東京タワーを中心
       zoom: 12,
     });
-      
-      // 保存された地図情報からピンをさす
-    <% @maps.each do |map| %>
-    // google.maps.LatLngインスタンスを生成
-    console.log("------------")
-    console.log(map)
-    console.log("------------")
+    
+    place_lat = document.getElementById('place_map_latitude')
+    place_lng = document.getElementById('place_map_longitude')
+    
+    // 保存された地図情報からピンをさす
+    <% @places.each do |place| %>
     pos = new google.maps.LatLng(
-    11, //latitude
-    2//longitude
+    <%= place.latitude %>, //latitude
+    <%= place.longitude %> //longitude
     );
     default_marker = new google.maps.Marker({
-    map: mapInstance,
+    map: map,
     position: pos,
     icon: {
     url: ' https://maps.google.com/mapfiles/ms/icons/green-dot.png', //アイコンのURL
@@ -66,51 +73,69 @@ function initMap(){
     });
     <% end %>
 
-      // 情報ウィンドウの表示
+    // 繰り返し処理でマーカーと吹き出しを複数表示させる
+    for (var i = 0; i < markerData.length; i++) {
+      // 各地点の緯度経度を算出
+      markerLatLng = new google.maps.LatLng({
+        lat: markerData[i]['latitude'],
+        lng: markerData[i]['longitude']
+      });
+
+      // マーカーの表示
+      marker[i] = new google.maps.Marker({
+        position: markerLatLng,
+        map: map
+      });
+
+      // 吹き出しの表示
       let id = markerData[i]['id']
       place_name[i]= markerData[i]['name'];
       place_lat[i]= markerData[i]['latitude'];
       place_lng[i]= markerData[i]['longitude'];
       infoWindow[i] = new google.maps.InfoWindow({
-         content: `<a href='/places/${ id }'>${ markerData[i]['name'] }</a><br><input type="button" id="btn-add" value="追加" onclick="addPlace(place_name, place_lat, place_lng, ${i})">`
+        // 吹き出しの中身, 引数で各属性の配列と配列番号を渡す
+        content: `<a href='/places/${ id }'>${ markerData[i]['name'] }</a><input type="button" value="追加" onclick="addPlace(place_name, place_lat, place_lng, ${i})">`
       });
       markerEvent(i);
-}
-
-function codeAddress(){
-  let inputAddress = document.getElementById('address').value;
-
-  geocoder.geocode( { 'address': inputAddress}, function(results, status) {
-    if (status == 'OK') {
-      mapInstance.setCenter(results[0].geometry.location);
-      // 既存の検索マーカーを削除
-      if(marker != null){
-      marker.setMap(null);
-      }
-      marker = null;
-      marker = new google.maps.Marker({
-          map: mapInstance,
-          position: results[0].geometry.location
-      });
-      
-      // タイトルフォームにデフォルト値として検索値を設定
-      let name = document.getElementById('map_name');
-      name.setAttribute("value", inputAddress);
-      
-      // 検索値を隠しデータとしてセット
-      let hidden_address = document.getElementById('hidden_address');
-      hidden_address.setAttribute("value", inputAddress);
-    } else {
-      alert('該当する結果がありませんでした：' + status);
     }
-  });   
 }
 
-// マーカーをクリックしたら情報ウィンドウを表示
+// マーカーをクリックしたら吹き出しを表示
 function markerEvent(i) {
   marker[i].addListener('click', function () {
     infoWindow[i].open(map, marker[i]);
   });
+}
+
+function codeAddress() {
+    let inputAddress = document.getElementById('address').value;
+
+    geocoder.geocode({
+      'address': inputAddress
+    }, function (results, status) {
+      if (status == 'OK') {
+        map.setCenter(results[0].geometry.location);
+        place_result = results[0].geometry.location;
+        place_lat.value = place_result.lat();
+        place_lng.value = place_result.lng();
+        var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+        });
+
+        // タイトルフォームにデフォルト値として検索値を設定
+        let name = document.getElementById('spot-name');
+        name.setAttribute("value", inputAddress);
+      } else {
+        alert('該当する結果がありませんでした' + status);
+      }
+    });
+}
+
+function deleteMarker(){
+  marker.setMap(null);
+  place_lat.value = "";
+  place_lng.value = "";
 }
 
 // リストに追加する
@@ -122,6 +147,21 @@ function addPlace(name, lat, lng, number){
   li.attr("data-lat", lat[number]); // data-latという属性にlat[number]を入れる
   li.attr("data-lng", lng[number]); // data-lngという属性にlng[number]を入れる
   $('#route-list').append(li); // idがroute-listの要素の一番後ろにliを追加
+
+  // 重複チェックしてリストに追加
+  if(!isExistList(li)) {
+    $('#route-list').append(li);
+  }
+}
+// リストの重複をチェックする
+function isExistList(li) {
+    var exist = false;
+    $('#route-list li').each(function() {
+        if($(this).text() == $(li).text()) {
+            exist = true;
+        }
+    })
+    return exist;
 }
 
 // ルートを検索する
