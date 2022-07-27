@@ -5,7 +5,6 @@
       <input id="address" type="textbox" placeholder="行きたい場所を検索">
       <input id="btn-spot" type="button" value="検索" onclick="codeAddress()">
     </div>
-    <button type="button" id="btn-spot-add" class="btn btn-primary", onclick="location.href='/places#index';">場所を追加</button>
     <!-- 地図情報を保存するフォーム -->
     <div id="spot-form">
       <%= form_for @place do |f| %>
@@ -21,6 +20,7 @@
         <%= f.submit "保存", id:"spot-save" %>
       <% end %>
     </div>
+    <button type="button" id="btn-spot-add" class="btn btn-primary", onclick="location.href='/places#index';">場所を追加</button>
     <a id="del" type="button" class="btn marker-delete right" onclick="deleteMarker()"></i>マーカー削除</a>
   </div>
   <div id="map-route">
