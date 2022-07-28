@@ -1,5 +1,5 @@
 class MapsController < ApplicationController
-    before_action :authenticate_user!
+    before_action :authenticate_user!, :set_place, only: %i[ show edit update destroy ]
     def index
         @place = Place.new
         @places = Place.all

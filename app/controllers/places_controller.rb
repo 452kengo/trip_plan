@@ -1,9 +1,11 @@
 class PlacesController < ApplicationController
-  before_action :set_place, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, :set_place, only: %i[ show edit update destroy ]
 
   # GET /places or /places.json
   def index
+    @place = Place.new
     @places = Place.all
+    gon.place = @places
     @hash = Gmaps4rails.build_markers(@places) do |place, marker|
       marker.lat place.latitude
       marker.lng place.longitude
@@ -31,11 +33,15 @@ class PlacesController < ApplicationController
 
     respond_to do |format|
       if @place.save
-        format.html { redirect_to maps_index_path, notice: "Place was successfully created." }
+        format.html { redirect_to maps_index_path }
         format.json { render :show, status: :created, location: @place }
+        address = params[:address]
+        latitude = params[:latitude]
+        longitude = params[:longitude]
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { redirect_to maps_index_path, notice: "※未入力です！" }
         format.json { render json: @place.errors, status: :unprocessable_entity }
+        @places = Place.all
       end
     end
   end
@@ -44,7 +50,7 @@ class PlacesController < ApplicationController
   def update
     respond_to do |format|
       if @place.update(place_params)
-        format.html { redirect_to place_url(@place), notice: "Place was successfully updated." }
+        format.html { redirect_to place_url(@place) }
         format.json { render :show, status: :ok, location: @place }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -58,7 +64,7 @@ class PlacesController < ApplicationController
     @place.destroy
 
     respond_to do |format|
-      format.html { redirect_to places_url, notice: "Place was successfully destroyed." }
+      format.html { redirect_to maps_url }
       format.json { head :no_content }
     end
   end
@@ -71,6 +77,6 @@ class PlacesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def place_params
-      params.require(:place).permit(:name, :address, :description, :latitude, :longitude)
+      params.require(:place).permit(:name, :address, :latitude, :longitude)
     end
 end
