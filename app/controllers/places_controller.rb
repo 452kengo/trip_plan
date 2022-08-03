@@ -35,12 +35,14 @@ class PlacesController < ApplicationController
       if @place.save
         format.html { redirect_to maps_index_path }
         format.json { render :show, status: :created, location: @place }
+        format.js { @status = "success"}
         address = params[:address]
         latitude = params[:latitude]
         longitude = params[:longitude]
       else
-        format.html { redirect_to maps_index_path, notice: "※未入力です！" }
+        format.html { redirect_to maps_index_path, notice: "※場所・住所・到着時間・出発時間が未入力です！" }
         format.json { render json: @place.errors, status: :unprocessable_entity }
+        format.js { @status = "fail" }
         @places = Place.all
       end
     end
@@ -77,6 +79,6 @@ class PlacesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def place_params
-      params.require(:place).permit(:name, :address, :latitude, :longitude)
+      params.require(:place).permit(:name, :address, :latitude, :longitude, :departureTime, :arrivalTime)
     end
 end

@@ -11,6 +11,11 @@
         <%= f.text_field :name, id:"spot-name" %>
         <br>
         <%= f.text_field :address, id:"spot-address" %>
+        <br>
+        <%= f.label :到着 %>
+        <%= f.time_field :departureTime %>
+        <%= f.label :出発 %>
+        <%= f.time_field :arrivalTime %>
         <%= f.hidden_field :latitude, id:"spot-latitude" %>
         <%= f.hidden_field :longitude,id:"spot-longitude" %>
         <%= f.fields_for :map, @map do |map| %>

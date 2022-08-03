@@ -1,12 +1,15 @@
 <!--mapパーシャル、render @mapsでmapパーシャルを表示-->
 <div id="route-spot">
     <div id="place-name"><%= place.name %></div>
-    <br>
-    <div id="staying-time">
-        <input type="time" name="arrival-time" class="time">
-        <p>から&emsp;</p>
-        <input type="time" name="departure-time" class="time">
-        <p>まで</p>
+    <div id="place-address"><%= place.address %></div>
+    <div id="staying-time" class="form-inline" role="form">
+        <P class="times"><%= place.departureTime.strftime( "%H:%M" ) %></P>
+        <P class="times">-</p>
+        <P class="times"><%= place.arrivalTime.strftime( "%H:%M" ) %></p>
     </div>
-    <%= link_to '削除', place, method: :delete, class: "spot-delete" %>
+    <div id="btn-place">
+        <%= link_to '編集', "/places/#{place.id}/edit", class: "spot-edit", remote: true %>
+        <%= link_to '削除', place, method: :delete, class: "spot-delete" %>
+    </div>
+    <div id="place-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 </div>

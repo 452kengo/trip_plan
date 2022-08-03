@@ -20,5 +20,15 @@
   <%= @place.longitude %>
 </p>
 
+<p>
+  <strong>到着:</strong>
+  <%= @place.departureTime.strftime( "%H:%M" ) %>
+</p>
+
+<p>
+  <strong>出発:</strong>
+  <%= @place.arrivalTime.strftime( "%H:%M" ) %>
+</p>
+
 <%= link_to 'Edit', edit_place_path(@place) %> |
 <%= link_to 'Back', places_path %>
