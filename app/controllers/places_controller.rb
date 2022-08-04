@@ -1,15 +1,17 @@
 class PlacesController < ApplicationController
-  before_action :authenticate_user!, :set_place, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
+  before_action :set_plan
+  before_action :set_place, only: %i[ show edit update destroy ]
 
   # GET /places or /places.json
   def index
-    @place = Place.new
-    @places = Place.all
+    @place = current_user.Place.new
+    @places = current_user.Place.all
     gon.place = @places
     @hash = Gmaps4rails.build_markers(@places) do |place, marker|
       marker.lat place.latitude
       marker.lng place.longitude
-      marker.infowindow render_to_string( partial: "maps/infowindow",
+      marker.infowindow render_to_string( partial: "places/infowindow",
                                           locals: {place:place} )
     end
   end
@@ -20,7 +22,7 @@ class PlacesController < ApplicationController
 
   # GET /places/new
   def new
-    @place = Place.new
+    @place = @plan.Place.new
   end
 
   # GET /places/1/edit
@@ -29,21 +31,29 @@ class PlacesController < ApplicationController
 
   # POST /places or /places.json
   def create
-    @place = Place.new(place_params)
+    @place = @plan.Place.new(place_params)
 
     respond_to do |format|
       if @place.save
-        format.html { redirect_to maps_index_path }
+        format.html { redirect_to plans_path }
         format.json { render :show, status: :created, location: @place }
         format.js { @status = "success"}
         address = params[:address]
         latitude = params[:latitude]
         longitude = params[:longitude]
+        unless latitude.empty && longitude.empty?
+          @map = @place.build_map(
+            address: address,
+            latitude: latitude,
+            longitude: longitude
+          )
+          @map.save
+        end
       else
-        format.html { redirect_to maps_index_path, notice: "※場所・住所・到着時間・出発時間が未入力です！" }
+        format.html { redirect_to plans_path, notice: "※場所・住所・到着時間・出発時間が未入力です！" }
         format.json { render json: @place.errors, status: :unprocessable_entity }
         format.js { @status = "fail" }
-        @places = Place.all
+        @places = current_user.Place.all
       end
     end
   end
@@ -52,10 +62,10 @@ class PlacesController < ApplicationController
   def update
     respond_to do |format|
       if @place.update(place_params)
-        format.html { redirect_to place_url(@place) }
+        @status = true
         format.json { render :show, status: :ok, location: @place }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        @status = false
         format.json { render json: @place.errors, status: :unprocessable_entity }
       end
     end
@@ -66,15 +76,20 @@ class PlacesController < ApplicationController
     @place.destroy
 
     respond_to do |format|
-      format.html { redirect_to maps_url }
+      format.html { redirect_to plans_url }
       format.json { head :no_content }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_plan
+      @plan = current_user.plans.find_by(id: params[:plan_id])
+      redirect_to(plans_url, alert: "ERROR!!") if @plan.blank?
+    end
+    
     def set_place
-      @place = Place.find(params[:id])
+      @place = @plan.Place.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

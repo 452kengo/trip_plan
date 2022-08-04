@@ -1,4 +1,44 @@
-<!--mapパーシャル、render @mapsでmapパーシャルを表示-->
+<div class="card mt-2 place-card <%=" text-muted bg-light" if place.done %>"
+  data-model_name="<%= Place.model_name.singular %>"
+  data-goal_id="<%= place.plan.id %>"
+  data-id="<%= place.id %>">
+  <div class="card-body pr-1">
+    <div class="card-text pr-4">
+      <%= place.done ? tag.del(){simple_format place.content} : (simple_format place.content) %>
+    </div>
+    <div class="btn-group position-absolute" style="top: 10px; right: 4px">
+      <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-ellipsis-v"></i>
+      </button>
+      <div class="dropdown-menu dropdown-menu-right text-middle">
+        <%= form_with(model: place, url: [place.plan, place], remote: true) do |form| %>
+          <% if place.done %>
+            <%= form.hidden_field :done, value: false, readonly: true %>
+            <%= form.submit "未完了", class: "dropdown-item text-success" %>
+          <% else %>
+            <%= form.hidden_field :done, value: true, readonly: true %>
+            <%= form.submit "完了！", class: "dropdown-item text-success" %>
+          <% end %>
+        <% end %>
+        <div class="dropdown-divider"></div>
+        <%= link_to "編集", edit_plan_place_path(place.plan, place), class: "dropdown-item", remote: true %>
+        <%= link_to "削除",
+            plan_place_path(place.plan, place),
+            method: :delete,
+            class: "dropdown-item text-danger",
+            remote: true, data: { confirm: 'Are you sure?' } %>
+      </div>
+    </div>
+    <div class="card-text">
+      <small class="text-muted">
+        <%= place.created_at.strftime('%Y/%m/%d') %>
+      </small>
+    </div>
+  </div>
+</div>
+
+
+
 <div id="route-spot">
     <div id="place-name"><%= place.name %></div>
     <div id="place-address"><%= place.address %></div>
@@ -8,7 +48,7 @@
         <P class="times"><%= place.arrivalTime.strftime( "%H:%M" ) %></p>
     </div>
     <div id="btn-place">
-        <%= link_to '編集', "/places/#{place.id}/edit", class: "spot-edit", remote: true %>
+        <%= link_to '編集', edit_plan_place_path, class: "spot-edit", remote: true %>
         <%= link_to '削除', place, method: :delete, class: "spot-delete" %>
     </div>
     <div id="place-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

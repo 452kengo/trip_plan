@@ -1,0 +1,26 @@
+<div class="card bg-light d-inline-block text-wrap h-100 mx-1 plan-card"
+  data-model_name="<%= Plan.model_name.singular %>"
+  data-id="<%= plan.id %>">
+  <div class="d-flex flex-column h-100" style="width: 25rem; min-width: 25rem;">
+    <div class="font-weight-bold px-4 py-2 plan-header">
+      <div class="pr-5">
+        <%= plan.title %>
+      </div>
+      <div class="text-right position-absolute" style="top: 4px; right: 4px">
+        <%= link_to(new_plan_place_path(plan), title: "New Place", class: "btn px-0", remote: true) do %><i class="fas fa-plus align-middle"></i><% end %>
+        <div class="btn-group">
+          <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-ellipsis-v align-middle"></i>
+          </button>
+          <div class="dropdown-menu dropdown-menu-right text-middle">
+            <%= link_to "Edit", edit_plan_path(plan), class: "dropdown-item", remote: true %>
+            <%= link_to "Delete", plan, method: :delete, class: "dropdown-item text-danger", remote: true, data: { confirm: 'Are you sure?' } %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body px-2 pb-2 pt-0 overflow-auto place-cards">
+      <%= render partial: "places/place", collection: plan.places, as: :place %>
+    </div>
+  </div>
+</div>

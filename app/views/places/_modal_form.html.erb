@@ -1,0 +1,57 @@
+<div class="modal fade" id="planModal" tabindex="-1" role="dialog" aria-labelledby="planModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <%= form_with(model: place, url: [plan, place], remote: true) do |form| %>
+                <div class="modal-header">
+                  <h5 class="modal-title" id="planModal"><%= "#{params[:action].camelize} #{place.model_name.human}" %></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+        <div class="modal-body">
+              <% if place.errors.any? %>
+                <div id="error_explanation">
+                  <h2><%= pluralize(place.errors.count, "error") %> prohibited this place from being saved:</h2>
+            
+                  <ul>
+                  <% place.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                  </ul>
+                </div>
+              <% end %>
+            
+              <div class="field">
+                <%= form.hidden_field :name %>
+              </div>
+            
+              <div class="field">
+                <%= form.hidden_field :address %>
+              </div>
+            
+              <div class="field">
+                <%= form.hidden_field :latitude %>
+              </div>
+            
+              <div class="field">
+                <%= form.hidden_field :longitude %>
+              </div>
+            
+              <div id="form-time">
+                <div id="form-departureTime" class="field">
+                  <%= form.label :到着 %>
+                  <%= form.time_field :departureTime %>
+                </div>
+              
+                <div id="form-arrivalTime" class="field">
+                  <%= form.label :出発 %>
+                  <%= form.time_field :arrivalTime %>
+                </div>
+              </div>
+              <div class="actions">
+                <%= form.submit %>
+              </div>
+            <% end %>
+        </div>
+    </div>
+</div>
