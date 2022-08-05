@@ -4,7 +4,7 @@ class PlansController < ApplicationController
 
   # GET /plans or /plans.json
   def index
-    @plans = current_user.Plan.all
+    @plans = current_user.plans.all
   end
 
   # GET /plans/1 or /plans/1.json
@@ -13,7 +13,7 @@ class PlansController < ApplicationController
 
   # GET /plans/new
   def new
-    @plan = current_user.Plan.new
+    @plan = current_user.plans.new
   end
 
   # GET /plans/1/edit
@@ -22,45 +22,33 @@ class PlansController < ApplicationController
 
   # POST /plans or /plans.json
   def create
-    @plan = current_user.Plan.new(plan_params)
+    @plan = current_user.plans.new(plan_params)
 
-    respond_to do |format|
       if @plan.save
         @status = true
-        format.json { render :show, status: :created, location: @plan }
       else
         @status = false
-        format.json { render json: @plan.errors, status: :unprocessable_entity }
       end
-    end
   end
 
   # PATCH/PUT /plans/1 or /plans/1.json
   def update
-    respond_to do |format|
-      if @plan.update(plan_params)
-        @status = true
-        format.json { render :show, status: :ok, location: @plan }
-      else
-        @status = false
-        format.json { render json: @plan.errors, status: :unprocessable_entity }
-      end
+    if @plan.update(plan_params)
+      @status = true
+    else
+      @status = false
     end
   end
 
   # DELETE /plans/1 or /plans/1.json
   def destroy
     @plan.destroy
-
-    respond_to do |format|
-      format.json { head :no_content }
-    end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_plan
-      @plan = current_user.Plan.find(params[:id])
+      @plan = current_user.plans.find(params[:id])
       redirect_to(plans_url, alert: "ERROR!!") if @plan.blank?
     end
 

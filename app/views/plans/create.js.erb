@@ -1,0 +1,14 @@
+// modalを閉じる処理
+$("#planModal").modal("hide");
+$('body').removeClass('modal-open');
+$('.modal-backdrop').remove();
+
+
+// Rails @status => true 画面の書き換え : false モーダルを再度表示
+<% if @status %>
+$("#plansIndex").append("<%= j(render @plan) %>");
+
+<% else %>
+$("#modalArea").html("<%= j(render 'plans/form', plan: @plan) %>")
+$("#modalArea").find(".modal").modal('show')
+<% end %>

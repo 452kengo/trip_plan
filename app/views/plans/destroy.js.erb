@@ -1,0 +1,7 @@
+// modalを閉じる処理
+$("#planModal").modal("hide");
+$("body").removeClass("modal-open");
+$(".modal-backdrop").remove();
+
+// 画面の書き換え
+$('[data-model_name="plan"]').filter('[data-id="<%= @plan.id %>"]').remove();

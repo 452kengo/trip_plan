@@ -20,12 +20,15 @@
             </div>
           <% end %>
           <div class="field">
-            <%= form.label :title %>
+            <%= form.label :プラン名 %>
             <%= form.text_field :title %>
+            <br>
+            <%= form.label :日付 %>
+            <%= form.date_field :plan_date, value: Time.now.strftime("%Y-%m-%d") %>
           </div>
         </div>
         <div class="modal-footer actions">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
           <%= form.submit %>
         </div>
       <% end %>

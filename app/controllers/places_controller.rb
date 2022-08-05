@@ -5,8 +5,8 @@ class PlacesController < ApplicationController
 
   # GET /places or /places.json
   def index
-    @place = current_user.Place.new
-    @places = current_user.Place.all
+    @place = @plan.places.new
+    @places = @plan.places.all
     gon.place = @places
     @hash = Gmaps4rails.build_markers(@places) do |place, marker|
       marker.lat place.latitude
@@ -22,7 +22,7 @@ class PlacesController < ApplicationController
 
   # GET /places/new
   def new
-    @place = @plan.Place.new
+    @place = @plan.places.new
   end
 
   # GET /places/1/edit
@@ -31,11 +31,9 @@ class PlacesController < ApplicationController
 
   # POST /places or /places.json
   def create
-    @place = @plan.Place.new(place_params)
+    @place = @plan.places.new(place_params)
 
-    respond_to do |format|
       if @place.save
-        format.html { redirect_to plans_path }
         format.json { render :show, status: :created, location: @place }
         format.js { @status = "success"}
         address = params[:address]
@@ -53,9 +51,8 @@ class PlacesController < ApplicationController
         format.html { redirect_to plans_path, notice: "※場所・住所・到着時間・出発時間が未入力です！" }
         format.json { render json: @place.errors, status: :unprocessable_entity }
         format.js { @status = "fail" }
-        @places = current_user.Place.all
+        @places = @plan.places.all
       end
-    end
   end
 
   # PATCH/PUT /places/1 or /places/1.json
@@ -89,11 +86,11 @@ class PlacesController < ApplicationController
     end
     
     def set_place
-      @place = @plan.Place.find(params[:id])
+      @place = @plan.places.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def place_params
-      params.require(:place).permit(:name, :address, :latitude, :longitude, :departureTime, :arrivalTime)
+      params.require(:place).permit(:name, :address, :latitude, :longitude, :departureTime, :arrivalTime, :plan_id, :done)
     end
 end
