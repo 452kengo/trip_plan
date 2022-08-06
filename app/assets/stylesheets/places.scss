@@ -1,6 +1,124 @@
-// Place all the styles related to the places controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.map-container {
+    display:flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+// 地図================================
+.map-canvas {
+    position: relative;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 600px;
+    height: 620px;
+}
+// 情報ウィンドウ
+#btn-add {
+    background-color: #33CC99;
+    color: #FFF;
+    padding: 5px;
+    margin: 5px;
+}
+// 検索窓==============================
+#spot-search {
+    overflow: scroll;
+    position: relative;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    padding: 0 0 10px 0;
+    width: 430px;
+    height: 620px;
+    background-color: #F3FFD8;
+}
+#spot-search-top {
+    background-color: #33CC99;
+    margin: 0 0 20px 0;
+    padding: 10px;
+}
+#address {
+    background-color: #FFF;
+    border: solid 2px #33CC99;
+    padding: 5px;
+    width: 85%;
+}
+#btn-spot {
+    background-color: #33CC99;
+    border: 3px solid #FFF;
+    color: #FFF;
+    padding: 5px;
+}
+#btn-spot:hover {
+    color: #FFCC66;
+    text-decoration: underline;
+}
+#spot-form {
+    position:relative;
+    border: 3px solid #33CC99;
+    margin: 5px;
+    padding: 8px;
+}
+#spot-name{
+    font-weight: bold;
+}
+#spot-address {
+    width: 85%;
+    font-size: 10px;
+}
+#spot-save{
+    background-color: #33CC99;
+    position: absolute;
+    right: 5px;
+    bottom: 0;
+    color: #FFF;
+    margin: 5px;
+    padding: 5px;
+}
+#spot-save:hover {
+    color: #FFCC66;
+    text-decoration: underline;
+}
+// ルート==============================
+#map-route {
+    overflow: scroll;
+    position: relative;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    padding: 10px;
+    width: 470px;
+    height: 620px;
+    background-color: #FFCC66;
+}
+#map-search {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    padding: 10px;
+    height: 54px;
+}
+.list-group-item {
+    position: absolute;
+}
+#route-spot {
+    position: relative;
+    background-color: #F3FFD8;
+    border: 2px solid #33CC99;
+    margin: 1px;
+}
+
+// 保存した場所place
 #place-name {
     font-weight: bold;
 }

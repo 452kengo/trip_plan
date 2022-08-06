@@ -1,10 +1,13 @@
-  <div class="plan-title-area px-3">
+<div id="plan-container" class="center-block">
+  <div id="plan-title" class="plan-title-area px-3 text-center">
     <h1>MYプラン</h1>
-    <%= link_to new_plan_path, title: "新規プラン作成", class: "btn p-0 text-dark", remote: true do %>
+    <div>
+    <%= link_to new_plan_path, title: "新規プラン作成", id: "btn-new-plan", class: "btn p-2", remote: true do %>
       <i class="fas fa-plus align-middle pr-1"></i><span class="align-middle">新規プラン作成</span>
     <% end %>
+    </div>
   </div>
-  <div class="pt-3 p-1 text-nowrap plan-index-area" id="plansIndex">
+  <div class="plan-index-area pt-3 p-1 w-50 text-center" id="plansIndex">
     <%= render @plans %>
   </div>
-  
+</div>  

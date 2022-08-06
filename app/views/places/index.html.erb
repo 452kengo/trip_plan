@@ -3,7 +3,9 @@
   <div id="map" class="map-canvas"></div>
   <!--中央-->
   <div id="plan-canvas">
-    <%= render 'plan/index' %>
+    <div class="pt-3 p-1 text-nowrap plan-index-area" id="plansIndex">
+      <%= render @plans %>
+    </div>
   </div>
   <div id="spot-search">
     <div id="spot-search-top">

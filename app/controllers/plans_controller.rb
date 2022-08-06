@@ -4,7 +4,7 @@ class PlansController < ApplicationController
 
   # GET /plans or /plans.json
   def index
-    @plans = current_user.plans.all
+    @plans = current_user.plans.all.order("plan_date DESC")
   end
 
   # GET /plans/1 or /plans/1.json
@@ -48,12 +48,12 @@ class PlansController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_plan
-      @plan = current_user.plans.find(params[:id])
+      @plan = current_user.plans.find_by(id: params[:id])
       redirect_to(plans_url, alert: "ERROR!!") if @plan.blank?
     end
 
     # Only allow a list of trusted parameters through.
     def plan_params
-      params.require(:plan).permit(:title, :plan_date)
+      params.require(:plan).permit(:title, :plan_date, :user_id)
     end
 end

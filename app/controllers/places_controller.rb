@@ -1,12 +1,12 @@
 class PlacesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_plan
-  before_action :set_place, only: %i[ show edit update destroy ]
+  before_action :set_place, only: %i[ show edit update destroy sort ]
 
   # GET /places or /places.json
   def index
     @place = @plan.places.new
-    @places = @plan.places.all
+    @places = @plan.places.all.order("departureTime")
     gon.place = @places
     @hash = Gmaps4rails.build_markers(@places) do |place, marker|
       marker.lat place.latitude
@@ -48,7 +48,7 @@ class PlacesController < ApplicationController
           @map.save
         end
       else
-        format.html { redirect_to plans_path, notice: "※場所・住所・到着時間・出発時間が未入力です！" }
+        format.html { redirect_to plan_places_path, notice: "※場所・住所・到着時間・出発時間を全て入力してください！" }
         format.json { render json: @place.errors, status: :unprocessable_entity }
         format.js { @status = "fail" }
         @places = @plan.places.all
@@ -82,15 +82,14 @@ class PlacesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_plan
       @plan = current_user.plans.find_by(id: params[:plan_id])
-      redirect_to(plans_url, alert: "ERROR!!") if @plan.blank?
     end
     
     def set_place
-      @place = @plan.places.find(params[:id])
+      @place = @plan.places.find_by(id: params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def place_params
-      params.require(:place).permit(:name, :address, :latitude, :longitude, :departureTime, :arrivalTime, :plan_id, :done)
+      params.require(:place).permit(:name, :address, :latitude, :longitude, :departureTime, :arrivalTime, :plan_id, :position, :done)
     end
 end

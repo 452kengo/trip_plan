@@ -1,3 +1,27 @@
-// Place all the styles related to the plans controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+// index
+#plan-container {
+}
+
+#plan-title {
+    
+}
+
+#plansIndex {
+    margin: 0 auto;
+}
+
+// _plan
+#btn-new-plan:hover {
+    background-color: #CC3333;
+    color: #FFF;
+    text-decoration: underline;
+}
+
+#btn-spot-add {
+    background-color: #33CC99;
+    color: #FFF;
+}
+#btn-spot-add:hover {
+    color: #FFCC66;
+    text-decoration: underline;
+}
