@@ -1,0 +1,12 @@
+// Rails @status => true formの内容消去、要素の追加 : false モーダルを再度表示
+<% if @status %>
+// formを空にする / formにフォーカスする
+$('[data-model_name="plan"]').filter('[data-id="<%= @plan.id %>"]').find('form [name="place[content]"]').val("")
+$('[data-model_name="plan"]').filter('[data-id="<%= @plan.id %>"]').find('form [name="place[content]"]').eq(0).focus();
+
+// 順序が入れ替わるため、todosを描画しなおす
+$('[data-model_name="plan"]').filter('[data-id="<%= @place.id %>"]').find(".place-cards").html("<%= j(render partial: 'places/place', collection: @plan.places, as: :plan) %>");
+
+<% else %>
+$('[data-model_name="plan"]').filter('[data-id="<%= @plan.id %>"]').find('form [name="place[content]"]').eq(0).focus();
+<% end %>

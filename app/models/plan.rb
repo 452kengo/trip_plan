@@ -1,6 +1,6 @@
 class Plan < ApplicationRecord
     belongs_to :user
-    has_many :places, -> { order("done ASC, position ASC").includes(:plan) }, dependent: :destroy
+    has_many :places, dependent: :destroy
  
     validates :title, presence: true
 end

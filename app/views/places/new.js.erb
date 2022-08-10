@@ -1,0 +1,8 @@
+// true すでに一度フォームが表示されている場合 : false まだフォームが表示されてない場合
+if ($('[data-model_name="plan"]').filter('[data-id="<%= @plan.id %>"]').find('form[name="placeForm"]').length) {
+    $('[data-model_name="plan"]').filter('[data-id="<%= @plan.id %>"]').find('form[name="placeForm"]').eq(0).toggle()
+    $('[data-model_name="plan"]').filter('[data-id="<%= @plan.id %>"]').find('form [name="place[content]"]').eq(0).focus();
+} else {
+    $('[data-model_name="plan"]').filter('[data-id="<%= @plan.id %>"]').find('.plan-header').after("<%= j(render 'form', plan: @plan, place: @place) %>")
+    $('[data-model_name="plan"]').filter('[data-id="<%= @plan.id %>"]').find('form [name="place[content]"]').eq(0).focus();
+}

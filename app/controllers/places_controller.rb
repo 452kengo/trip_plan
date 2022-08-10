@@ -2,7 +2,7 @@ class PlacesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_plan
   before_action :set_place, only: %i[ show edit update destroy sort ]
-
+  
   # GET /places or /places.json
   def index
     @place = @plan.places.new
@@ -27,31 +27,38 @@ class PlacesController < ApplicationController
 
   # GET /places/1/edit
   def edit
+    @places = @plan.places.all.order("departureTime")
   end
 
   # POST /places or /places.json
   def create
     @place = @plan.places.new(place_params)
-
-      if @place.save
-        format.json { render :show, status: :created, location: @place }
-        format.js { @status = "success"}
-        address = params[:address]
-        latitude = params[:latitude]
-        longitude = params[:longitude]
-        unless latitude.empty && longitude.empty?
-          @map = @place.build_map(
-            address: address,
-            latitude: latitude,
-            longitude: longitude
-          )
-          @map.save
+      respond_to do |format|
+        if @place.save
+          format.json { render :show, status: :created, location: @place }
+          format.js { @status = "success"}
+          name = params[:name]
+          address = params[:address]
+          latitude = params[:latitude]
+          longitude = params[:longitude]
+          departureTime = params[:departureTime]
+          arrivalTime = params[:arrivalTime]
+          unless latitude.empty && longitude.empty?
+            @map = @place.build_map(
+              address: address,
+              latitude: latitude,
+              longitude: longitude,
+              departureTime: departureTime,
+              arrivalTime: arrivalTime
+            )
+            @map.save
+          end
+        else
+          format.html { redirect_to plan_places_path(place.plan, place), notice: "※場所・住所・到着時間・出発時間を全て入力してください！" }
+          format.json { render json: @place.errors, status: :unprocessable_entity }
+          format.js { @status = "fail" }
+          @places = @plan.places.all
         end
-      else
-        format.html { redirect_to plan_places_path, notice: "※場所・住所・到着時間・出発時間を全て入力してください！" }
-        format.json { render json: @place.errors, status: :unprocessable_entity }
-        format.js { @status = "fail" }
-        @places = @plan.places.all
       end
   end
 
@@ -70,10 +77,10 @@ class PlacesController < ApplicationController
 
   # DELETE /places/1 or /places/1.json
   def destroy
+    @place = @plan.places.find_by(id: params[:plan_id])
     @place.destroy
 
     respond_to do |format|
-      format.html { redirect_to plans_url }
       format.json { head :no_content }
     end
   end

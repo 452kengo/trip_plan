@@ -3,8 +3,6 @@ Rails.application.routes.draw do
                                     sessions: 'users/sessions' }
   root to: "home#index"
   resources :plans do
-    resources :places do
-      get "sort"
-    end
+    resources :places
   end
 end

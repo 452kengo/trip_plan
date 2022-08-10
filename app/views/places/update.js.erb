@@ -1,0 +1,13 @@
+// モーダルを閉じる処理
+$("#goalModal").modal("hide");
+$('body').removeClass('modal-open');
+$('.modal-backdrop').remove();
+
+// Rails @status => true 画面の書き換え : false モーダルを再度表示
+<% if @status %>
+$('[data-model_name="plan"]').filter('[data-id="<%= @plan.id %>"]').find(".place-cards").html("<%= j(render partial: 'places/place', collection: @plan.places, as: :place) %>");
+
+<% else %>
+$("#modalArea").html("<%= j(render 'modal_form', plan: @plan, place: @places) %>")
+$("#modalArea").find(".modal").modal('show')
+<% end %>

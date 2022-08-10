@@ -3,27 +3,36 @@
   <div id="map" class="map-canvas"></div>
   <!--中央-->
   <div id="plan-canvas">
-    <div class="pt-3 p-1 text-nowrap plan-index-area" id="plansIndex">
-      <%= render @plans %>
+      <div class="d-flex flex-column h-100" style="width: 25rem; min-width: 25rem;">
+        <div class="font-weight-bold px-4 py-2 plan-header">
+          <div class="pr-5">
+            <div class="em"><h5><%= @plan.title %></h5></div>
+            <br>
+            <div class=""><%= @plan.plan_date.strftime("%Y-%m-%d") %></div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
   <div id="spot-search">
     <div id="spot-search-top">
       <input id="address" type="textbox" placeholder="行きたい場所を検索">
       <input id="btn-spot" type="button" value="検索" onclick="codeAddress()">
     </div>
     <div id="spot-form">
-      <%= form_for @place do |f| %>
+      <%= form_for @place, url:plan_places_path(@plan) do |f| %>
         <%= f.text_field :name, id:"spot-name" %>
         <br>
         <%= f.text_field :address, id:"spot-address" %>
         <br>
-        <%= f.label :到着 %>
-        <%= f.time_field :departureTime %>
-        <%= f.label :出発 %>
-        <%= f.time_field :arrivalTime %>
-        <%= f.hidden_field :latitude, id:"spot-latitude" %>
-        <%= f.hidden_field :longitude,id:"spot-longitude" %>
+        <div class="form-inline" role="form">
+          <%= f.label :到着 %>
+          <%= f.time_field :departureTime %>
+          <P>&nbsp;&nbsp;&nbsp;</P>
+          <%= f.label :出発 %>
+          <%= f.time_field :arrivalTime %>
+          <%= f.hidden_field :latitude, id:"spot-latitude" %>
+          <%= f.hidden_field :longitude,id:"spot-longitude" %>
+        </div>
         <%= f.fields_for :map, @map do |map| %>
           <%= map.hidden_field :latitude %>
           <%= map.hidden_field :longitude %>
@@ -66,22 +75,6 @@ function initMap(){
     
     place_lat = document.getElementById('place_map_latitude')
     place_lng = document.getElementById('place_map_longitude')
-    
-    // 保存された地図情報からピンをさす
-    <% @places.each do |place| %>
-    pos = new google.maps.LatLng(
-    <%= place.latitude %>, //latitude
-    <%= place.longitude %> //longitude
-    );
-    default_marker = new google.maps.Marker({
-    map: map,
-    position: pos,
-    icon: {
-    url: ' https://maps.google.com/mapfiles/ms/icons/green-dot.png', //アイコンのURL
-    scaledSize: new google.maps.Size(40, 40) //サイズ
-    }
-    });
-    <% end %>
 
     // 繰り返し処理でマーカーと吹き出しを複数表示させる
     for (var i = 0; i < markerData.length; i++) {
@@ -104,7 +97,7 @@ function initMap(){
       place_lng[i]= markerData[i]['longitude'];
       infoWindow[i] = new google.maps.InfoWindow({
         // 吹き出しの中身, 引数で各属性の配列と配列番号を渡す
-        content: `<a href='/places/${ id }'>${ markerData[i]['name'] }</a><input type="button" value="追加" onclick="addPlace(place_name, place_lat, place_lng, ${i})">`
+        content: `<a>${ markerData[i]['name'] }</a><input type="button" value="追加" onclick="addPlace(place_name, place_lat, place_lng, ${i})">`
       });
       markerEvent(i);
     }
