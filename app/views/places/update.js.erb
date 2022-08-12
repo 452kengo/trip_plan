@@ -8,6 +8,6 @@ $('.modal-backdrop').remove();
 $('[data-model_name="plan"]').filter('[data-id="<%= @plan.id %>"]').find(".place-cards").html("<%= j(render partial: 'places/place', collection: @plan.places, as: :place) %>");
 
 <% else %>
-$("#modalArea").html("<%= j(render 'modal_form', plan: @plan, place: @places) %>")
+$("#modalArea").html("<%= j(render 'modal_form', plan: @plan, place: @place) %>")
 $("#modalArea").find(".modal").modal('show')
 <% end %>

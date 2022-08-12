@@ -1,6 +1,6 @@
       <div id="route-spot">
-        <div id="place-name"><%= place.name %></div>
-        <div id="place-address"><%= place.address %></div>
+        <p id="id="route-list" class="list-group""><%= place.name %></p>
+        <p id="place-address"><%= place.address %></p>
         <div id="staying-time" class="form-inline" role="form">
             <P class="times"><%= place.departureTime.strftime( "%H:%M" ) %></P>
             <P class="times">-</p>
@@ -8,7 +8,7 @@
         </div>
         <div id="btn-place">
             <%= link_to '編集', edit_plan_place_path(place.plan, place), class: "spot-edit", remote: true %>
-            <%= link_to '削除', "/plans/#{@plan.id}/places/#{@place.id}(place.plan, place)", method: :delete, class: "spot-delete", remote: true %>
+            <%= link_to '削除', plan_place_path(place.plan, place), method: :delete, class: "spot-delete", remote: true, data: { confirm: '削除しますか？' } %>
         </div>
         <div id="place-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
       </div>

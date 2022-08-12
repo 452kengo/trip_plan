@@ -2,45 +2,46 @@
   <!--左側-->
   <div id="map" class="map-canvas"></div>
   <!--中央-->
-  <div id="plan-canvas">
-      <div class="d-flex flex-column h-100" style="width: 25rem; min-width: 25rem;">
-        <div class="font-weight-bold px-4 py-2 plan-header">
-          <div class="pr-5">
-            <div class="em"><h5><%= @plan.title %></h5></div>
-            <br>
-            <div class=""><%= @plan.plan_date.strftime("%Y-%m-%d") %></div>
+  <div id="center-container">
+    <div id="plan-canvas">
+        <div class="d-flex flex-column h-100" style="width: 25rem; min-width: 25rem;">
+          <div class="font-weight-bold px-4 py-2 plan-header">
+            <div class="pr-5">
+              <div class="em"><h5><%= @plan.title %></h5></div>
+              <br>
+              <div class=""><%= @plan.plan_date.strftime("%Y-%m-%d") %></div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  <div id="spot-search">
-    <div id="spot-search-top">
-      <input id="address" type="textbox" placeholder="行きたい場所を検索">
-      <input id="btn-spot" type="button" value="検索" onclick="codeAddress()">
-    </div>
-    <div id="spot-form">
-      <%= form_for @place, url:plan_places_path(@plan) do |f| %>
-        <%= f.text_field :name, id:"spot-name" %>
-        <br>
-        <%= f.text_field :address, id:"spot-address" %>
-        <br>
-        <div class="form-inline" role="form">
-          <%= f.label :到着 %>
-          <%= f.time_field :departureTime %>
-          <P>&nbsp;&nbsp;&nbsp;</P>
-          <%= f.label :出発 %>
-          <%= f.time_field :arrivalTime %>
-          <%= f.hidden_field :latitude, id:"spot-latitude" %>
-          <%= f.hidden_field :longitude,id:"spot-longitude" %>
-        </div>
-        <%= f.fields_for :map, @map do |map| %>
-          <%= map.hidden_field :latitude %>
-          <%= map.hidden_field :longitude %>
+    <div id="spot-search">
+      <div id="spot-search-top">
+        <input id="address" type="textbox" placeholder="行きたい場所を検索">
+        <input id="btn-spot" type="button" value="検索" onclick="codeAddress()">
+      </div>
+      <div id="spot-form">
+        <%= form_for @place, url:plan_places_path(@plan) do |f| %>
+          <%= f.text_field :name, id:"spot-name" %>
+          <br>
+          <%= f.text_field :address, id:"spot-address" %>
+          <br>
+          <div class="form-inline" role="form">
+            <%= f.label :到着 %>
+            <%= f.time_field :departureTime %>
+            <P>&nbsp;&nbsp;&nbsp;</P>
+            <%= f.label :出発 %>
+            <%= f.time_field :arrivalTime %>
+            <%= f.hidden_field :latitude, id:"spot-latitude" %>
+            <%= f.hidden_field :longitude, id:"spot-longitude" %>
+          </div>
+          <%= f.fields_for :map, @map do |map| %>
+            <%= map.hidden_field :latitude %>
+            <%= map.hidden_field :longitude %>
+          <% end %>
+          <%= f.submit "保存", id:"spot-save" %>
         <% end %>
-        <%= f.submit "保存", id:"spot-save" %>
-      <% end %>
+      </div>
     </div>
-    <button type="button" id="btn-spot-add" class="btn btn-primary", onclick="location.href='/places#edit';">場所を整理</button>
   </div>
   <!--右側-->
   <div id="map-route">
