@@ -1,9 +1,19 @@
 // index
 #plan-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-image: url("/assets/man.png");
+    background-position: -60px 90px;
+    background-repeat: no-repeat;
+    background-size: 600px;
 }
 
-#plan-title {
-    
+#plan-title > h1 {
+    width: 250px;
+    background: linear-gradient(transparent 70%, #559966 70%);
 }
 
 #plansIndex {
@@ -11,10 +21,20 @@
 }
 
 // _plan
+#btn-new-plan {
+    color: #EE5533;
+}
 #btn-new-plan:hover {
-    background-color: #CC3333;
+    background-color: #EE5533;
     color: #FFF;
     text-decoration: underline;
+}
+
+.plan-card {
+    background-color: #FFF7B3;
+    border-left: solid 5px #FFEE55;
+    height: auto;
+    margin: 3px;
 }
 
 #btn-spot-add {
@@ -24,4 +44,19 @@
 #btn-spot-add:hover {
     color: #FFCC66;
     text-decoration: underline;
+}
+
+#btn-plan-edit:hover {
+    background-color: #FFEE55;
+    color: #FFF;
+    padding: 5px;
+} 
+
+#btn-plan-delete {
+    color: #EE5533;
+}
+#btn-plan-edit-dropdown:hover,
+#btn-plan-delete:hover {
+    background-color: #AA7722;
+    color: #FFF;
 }

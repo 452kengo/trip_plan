@@ -7,8 +7,8 @@
             <P class="times"><%= place.arrivalTime.strftime( "%H:%M" ) %></p>
         </div>
         <div id="btn-place">
-            <%= link_to '編集', edit_plan_place_path(place.plan, place), class: "spot-edit", remote: true %>
-            <%= link_to '削除', plan_place_path(place.plan, place), method: :delete, class: "spot-delete", remote: true, data: { confirm: '削除しますか？' } %>
+            <div><%= link_to '編集', edit_plan_place_path(place.plan, place), class: "spot-edit", remote: true %></div>
+            <div><%= link_to '削除', plan_place_path(place.plan, place), method: :delete, class: "spot-delete", remote: true %></div>
         </div>
         <div id="place-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
       </div>

@@ -20,21 +20,21 @@
         <input id="btn-spot" type="button" value="検索" onclick="codeAddress()">
       </div>
       <div id="spot-form">
-        <%= form_for @place, url:plan_places_path(@plan) do |f| %>
-          <%= f.text_field :name, id:"spot-name" %>
+        <%= form_for @place, url:plan_places_path(@plan),remote: true do |f| %>
+          <%= f.text_field :name, id:"spot-name", value:"（上の検索フォームで検索してください）", :required => true %>
           <br>
-          <%= f.text_field :address, id:"spot-address" %>
+          <%= f.text_field :address, id:"spot-address", :required => true %>
           <br>
           <div class="form-inline" role="form">
             <%= f.label :到着 %>
-            <%= f.time_field :departureTime %>
+            <%= f.time_field :departureTime,id:"spot-departureTime", :required => true %>
             <P>&nbsp;&nbsp;&nbsp;</P>
             <%= f.label :出発 %>
-            <%= f.time_field :arrivalTime %>
+            <%= f.time_field :arrivalTime,id:"spot-arrivalTime", :required => true %>
             <%= f.hidden_field :latitude, id:"spot-latitude" %>
             <%= f.hidden_field :longitude, id:"spot-longitude" %>
           </div>
-          <%= f.fields_for :map, @map do |map| %>
+          <%= f.fields_for :map, @place do |map| %>
             <%= map.hidden_field :latitude %>
             <%= map.hidden_field :longitude %>
           <% end %>
@@ -44,13 +44,15 @@
     </div>
   </div>
   <!--右側-->
-  <div id="map-route">
-    <ul id="route-list" class="list-group"></ul>
-    <div id="map-search">
-      <%= button_tag "ルート検索", id: "btn-search", class: "btn btn-primary", onclick: "search()" %>
+  <div>
+    <div id="map-route">
+      <ul id="route-list" class="list-group"></ul>
+      <%= render @places %>
     </div>
-    <%= render @places %>
-    <div id="distance-time"></div>
+    <div id="map-search">
+      <%= button_tag "ルート検索", id: "btn-search", class: "btn", onclick: "search()" %>
+      <div id="distance-time"></div>
+    </div>
   </div>
 </div>
 

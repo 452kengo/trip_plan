@@ -1,7 +1,7 @@
-<div class="card bg-light d-inline-block text-wrap h-100 mx-1 plan-card"
+<div class="card d-inline-block text-wrap mx-1 plan-card"
   data-model_name="<%= Plan.model_name.singular %>"
   data-id="<%= plan.id %>">
-  <div class="d-flex flex-column h-100" style="width: 25rem; min-width: 25rem;">
+  <div class="d-flex flex-column" style="width: 25rem; min-width: 25rem;">
     <div class="font-weight-bold px-4 py-2 plan-header">
       <div class="pr-5">
         <div class="em"><h5><%= plan.title %></h5></div>
@@ -10,15 +10,15 @@
       </div>
       <div class="text-right position-absolute" style="top: 4px; right: 4px">
         <% unless current_user == nil then %>
-          <%= link_to "編集", plan_places_path(plan), title: "編集", class: "btn px-0" %>
+          <%= link_to "編集", plan_places_path(plan), title: "編集", id: "btn-plan-edit", class: "btn" %>
         <% end %>
         <div class="btn-group">
           <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-ellipsis-v align-middle"></i>
           </button>
           <div class="dropdown-menu dropdown-menu-left text-middle">
-            <%= link_to "プラン名・日程を変える", edit_plan_path(plan), class: "dropdown-item", remote: true %>
-            <%= link_to "削除", plan, method: :delete, class: "dropdown-item text-danger", remote: true %>
+            <%= link_to "プラン名・日程を変える", edit_plan_path(plan), id: "btn-plan-edit-dropdown", class: "dropdown-item", remote: true %>
+            <%= link_to "削除", plan, method: :delete, id: "btn-plan-delete", class: "dropdown-item", remote: true %>
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@
     <div class="modal-content">
       <%= form_with(model: place, url: [plan, place], remote: true, class: "") do |form| %>
         <div class="modal-header">
-          <h5 class="modal-title" id="planModal"><%= "#{params[:action].camelize} #{place.model_name.human}" %></h5>
+          <h5 class="modal-title" id="planModal"><%= @place.name %></h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
             <span aria-hidden="true">&times;</span>
           </button>

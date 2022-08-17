@@ -32,24 +32,20 @@ class PlacesController < ApplicationController
 
   # POST /places or /places.json
   def create
-    @place = @plan.places.new(place_params)
+    @place = @plan.places.build(place_params)
       respond_to do |format|
         if @place.save
           format.json { render :show, status: :created, location: @place }
           format.js { @status = "success"}
-          name = params[:name]
           address = params[:address]
           latitude = params[:latitude]
           longitude = params[:longitude]
           departureTime = params[:departureTime]
           arrivalTime = params[:arrivalTime]
-          unless latitude.empty && longitude.empty?
+          unless latitude.empty && longitude.empty
             @map = @place.build_map(
-              address: address,
               latitude: latitude,
-              longitude: longitude,
-              departureTime: departureTime,
-              arrivalTime: arrivalTime
+              longitude: longitude
             )
             @map.save
           end
@@ -97,6 +93,6 @@ class PlacesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def place_params
-      params.require(:place).permit(:name, :address, :latitude, :longitude, :departureTime, :arrivalTime, :plan_id, :position, :done, map_attributes: [:plan_id, :latitude, :longitude])
+      params.require(:place).permit(:name, :address, :latitude, :longitude, :departureTime, :arrivalTime, :plan_id, :position, :done)
     end
 end

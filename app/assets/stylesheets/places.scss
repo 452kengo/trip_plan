@@ -16,20 +16,33 @@
     left: 0;
     margin: 0;
     padding: 0;
-    width: 600px;
-    height: 620px;
+    width: 620px;
+    height: 670px;
+}
+
+#info-window-name:hover {
+    background-color: #fff;
+    color: #000;
 }
 
 // 中央==============================
+#center-container {
+    width: 430px;
+    height: 670px;
+    background-image: url("/assets/man-2.png");
+    background-position: -50px 430px;
+    background-repeat: no-repeat;
+    background-size: 250px;
+}
+
 #plan-canvas {
-    height: 90px;
-    background-color: #CC3333;
-    color: #FFF;
-    margin: 5px 0;
+    background-color: #FFF7B3;
+    border-left: solid 5px #FFEE55;
+    height: auto;
+    margin: 20px 0;
 }
 
 #spot-search {
-    overflow: scroll;
     position: relative;
     top: 0;
     right: 0;
@@ -38,45 +51,53 @@
     margin: 0;
     padding: 0 0 10px 0;
     width: 430px;
-    height: 520px;
-    background-color: #F3FFD8;
+    height: 560px;
 }
 #spot-search-top {
-    background-color: #33CC99;
-    margin: 0 0 20px 0;
+    position: relative;
+    background-color: #559966;
+    margin: 0;
     padding: 10px;
 }
 #address {
-    background-color: #FFF;
-    border: solid 2px #33CC99;
+    background-color: #F3FFD8;
+    border: solid 2px #559966;
     padding: 5px;
-    width: 85%;
+    width: 87%;
 }
 #btn-spot {
-    background-color: #33CC99;
+    background-color: #559966;
     border: 3px solid #FFF;
     color: #FFF;
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    margin: 5px;
     padding: 5px;
 }
 #btn-spot:hover {
-    color: #FFCC66;
+    color: #FFF;
     text-decoration: underline;
+    margin: 8px;
 }
 #spot-form {
     position:relative;
-    border: 3px solid #33CC99;
-    margin: 5px;
+    background-color: #F3FFD8;
+    border: 3px solid #559966;
+    margin: 0;
     padding: 8px;
 }
 #spot-name{
+    width: 85%;
     font-weight: bold;
 }
 #spot-address {
     width: 85%;
-    font-size: 10px;
+    font-size: 12px;
 }
+
 #spot-save{
-    background-color: #33CC99;
+    background-color: #559966;
     position: absolute;
     right: 5px;
     bottom: 0;
@@ -85,8 +106,9 @@
     padding: 5px;
 }
 #spot-save:hover {
-    color: #FFCC66;
+    color: #FFF;
     text-decoration: underline;
+    margin: 8px;
 }
 // 右側==============================
 #map-route {
@@ -97,36 +119,62 @@
     bottom: 0;
     left: 0;
     margin: 0;
-    padding: 10px;
-    width: 470px;
+    padding: 5px;
+    width: 490px;
     height: 620px;
-    background-color: #FFCC66;
+    background-color: #F3FFD8;
 }
+
 #map-search {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
     margin: 0;
     padding: 10px;
     height: 54px;
 }
+
+#btn-search {
+    background-color: #EE5533;
+    margin: 0 0 10px 0;
+    color: #FFF;
+}
+#btn-search:disabled {
+  pointer-events: none;
+}
+#btn-search:hover {
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+#btn-search:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
 .list-group-item {
     position: absolute;
 }
+
+
+// 保存した場所place
 #route-spot {
     position: relative;
     background-color: #F3FFD8;
-    border: 2px solid #33CC99;
-    margin: 1px;
+    border: solid 3px #559966;
+    margin: 5px;
+    padding: 5px 0 0 5px;
 }
-
-// 保存した場所place
-#route-list {
+#route-spot:after {
+    position: absolute;
+    content: " ";
+    display: block;
+    border-bottom: solid 3px #EE5533;
+    bottom: -3px;
+    left: 0px;
+    width: 30%;
+}
+.list-group {
     font-weight: bold;
 }
 #place-address {
-    font-size: 10px;
+    font-size: 12px;
     margin: 5px;
 }
 
@@ -138,31 +186,33 @@
     margin: 5px 1px;
 }
 
-#btn-place {
-    display: flex;
-    position: absolute;
-    right: 5px;
-    bottom: 5px;
-}
-
 .spot-edit {
+    position: absolute;
+    right: 60px;
+    bottom: 3px;
     background-color: #F3FFD8;
-    border: 3px solid #FFCC66;
-    margin: 5px;
+    border: 3px solid #EE5533;
+    margin: 3px 10px;
     padding: 3px;
 }
 .spot-edit:hover {
     background-color: #F3FFD8;
-    color: #FFCC66;
+    color: #000;
+    margin: 8px;
 }
 
 .spot-delete {
-    background-color: #FFCC66;
+    position: absolute;
+    right: 5px;
+    bottom: 3px;
+    background-color: #EE5533;
+    border: 3px solid #EE5533;
     color: #FFF;
-    margin: 5px;
-    padding: 5px;
+    margin: 3px 10px;
+    padding: 3px;
 }
 .spot-delete:hover {
-    background-color: #FFCC66;
-    color: #CC3333;
+    background-color: #EE5533;
+    color: #FFF;
+    margin: 8px;
 }
