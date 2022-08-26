@@ -37,18 +37,11 @@ class PlacesController < ApplicationController
         if @place.save
           format.json { render :show, status: :created, location: @place }
           format.js { @status = "success"}
-          address = params[:address]
-          latitude = params[:latitude]
-          longitude = params[:longitude]
-          departureTime = params[:departureTime]
-          arrivalTime = params[:arrivalTime]
-          unless latitude.empty && longitude.empty
-            @map = @place.build_map(
-              latitude: latitude,
-              longitude: longitude
-            )
-            @map.save
-          end
+          address = place_params[:address]
+          latitude = place_params[:latitude]
+          longitude = place_params[:longitude]
+          departureTime = place_params[:departureTime]
+          arrivalTime = place_params[:arrivalTime]
         else
           format.html { redirect_to plan_places_path(@place.plan, @place), notice: "※場所・住所・到着時間・出発時間を全て入力してください！" }
           format.json { render json: @place.errors, status: :unprocessable_entity }
@@ -63,7 +56,7 @@ class PlacesController < ApplicationController
     respond_to do |format|
       if @place.update(place_params)
         @status = true
-        format.json { render :show, status: :ok, location: @place }
+        format.js { render :create }
       else
         @status = false
         format.json { render json: @place.errors, status: :unprocessable_entity }
@@ -75,9 +68,10 @@ class PlacesController < ApplicationController
   def destroy
     @place = @plan.places.find_by(id: params[:id])
     @place.destroy
-
+    @status = true
     respond_to do |format|
       format.json { head :no_content }
+      format.js { render :create }
     end
   end
 

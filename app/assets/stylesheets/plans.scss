@@ -1,7 +1,7 @@
 #plan-background {
     width: 100%;
     height: 630px;
-    background-image: url("/assets/man.png");
+    background-image: url("man.png");
     background-position: -60px 90px;
     background-repeat: no-repeat;
     background-size: 600px;
@@ -64,4 +64,20 @@
 #btn-plan-delete:hover {
     background-color: #AA7722;
     color: #FFF;
+}
+
+.update {
+    position: absolute;
+    right: 5px;
+    bottom: 3px;
+    background-color: #EE5533;
+    border: 3px solid #EE5533;
+    color: #FFF;
+    margin: 3px 10px;
+    padding: 3px;
+}
+.update:hover {
+    background-color: #EE5533;
+    color: #FFF;
+    margin: 8px;
 }

@@ -3,7 +3,7 @@
     <div class="modal-content">
       <%= form_with(model: plan, remote: true) do |form| %>
         <div class="modal-header">
-          <h5 class="modal-title" id="planModal"><%= "#{params[:action].camelize} #{plan.model_name.human}" %></h5>
+          <h5 class="modal-title" id="planModal"><%= "" %></h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -27,9 +27,8 @@
             <%= form.date_field :plan_date, value: Time.now.strftime("%Y-%m-%d") %>
           </div>
         </div>
-        <div class="modal-footer actions">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-          <%= form.submit %>
+        <div class="actions">
+          <%= form.submit "確定", class:"update" %>
         </div>
       <% end %>
     </div>
