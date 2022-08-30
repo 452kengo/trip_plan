@@ -22,12 +22,12 @@
 
 <p>
   <strong>到着:</strong>
-  <%= @place.departureTime.strftime( "%H:%M" ) %>
+  <%= place.set_departure_time %>
 </p>
 
 <p>
   <strong>出発:</strong>
-  <%= @place.arrivalTime.strftime( "%H:%M" ) %>
+  <%= place.set_arrival_time %>
 </p>
 
 <%= link_to 'Edit', edit_plan_place_path(@place) %> |

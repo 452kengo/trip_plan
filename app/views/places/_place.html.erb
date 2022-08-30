@@ -2,9 +2,9 @@
         <p id="route-list" class="list-group"><%= place.name %></p>
         <p id="place-address"><%= place.address %></p>
         <div id="staying-time" class="form-inline" role="form">
-            <P class="times"><%= place.departureTime.strftime( "%H:%M" ) %></P>
+            <P class="times"><%= place.departure_time.strftime( "%H:%M" ) %></P>
             <P class="times">-</p>
-            <P class="times"><%= place.arrivalTime.strftime( "%H:%M" ) %></p>
+            <P class="times"><%= place.arrival_time.strftime( "%H:%M" ) %></p>
         </div>
         <div id="btn-place">
             <div><%= link_to '編集', edit_plan_place_path(place.plan, place), class: "spot-edit", remote: true %></div>

@@ -27,10 +27,10 @@
           <br>
           <div class="form-inline" role="form">
             <%= f.label :到着 %>
-            <%= f.time_field :departureTime,id:"spot-departureTime", :required => true %>
+            <%= f.time_field :departure_time,id:"spot-departure_time", :required => true %>
             <P>&nbsp;&nbsp;&nbsp;</P>
             <%= f.label :出発 %>
-            <%= f.time_field :arrivalTime,id:"spot-arrivalTime", :required => true %>
+            <%= f.time_field :arrival_time,id:"spot-arrival_time", :required => true %>
             <%= f.hidden_field :latitude, id:"spot-latitude" %>
             <%= f.hidden_field :longitude, id:"spot-longitude" %>
           </div>

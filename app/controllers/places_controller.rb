@@ -6,7 +6,7 @@ class PlacesController < ApplicationController
   # GET /places or /places.json
   def index
     @place = @plan.places.new
-    @places = @plan.places.all.order("departureTime")
+    @places = @plan.places.all.order("departure_time")
     gon.place = @places
     @hash = Gmaps4rails.build_markers(@places) do |place, marker|
       marker.lat place.latitude
@@ -27,7 +27,7 @@ class PlacesController < ApplicationController
 
   # GET /places/1/edit
   def edit
-    @places = @plan.places.all.order("departureTime")
+    @places = @plan.places.all.order("departure_time")
   end
 
   # POST /places or /places.json
@@ -40,8 +40,8 @@ class PlacesController < ApplicationController
           address = place_params[:address]
           latitude = place_params[:latitude]
           longitude = place_params[:longitude]
-          departureTime = place_params[:departureTime]
-          arrivalTime = place_params[:arrivalTime]
+          departure_time = place_params[:departure_time]
+          arrival_time = place_params[:arrival_time]
         else
           format.html { redirect_to plan_places_path(@place.plan, @place), notice: "※場所・住所・到着時間・出発時間を全て入力してください！" }
           format.json { render json: @place.errors, status: :unprocessable_entity }
@@ -87,6 +87,6 @@ class PlacesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def place_params
-      params.require(:place).permit(:name, :address, :latitude, :longitude, :departureTime, :arrivalTime, :plan_id, :position, :done)
+      params.require(:place).permit(:name, :address, :latitude, :longitude, :departure_time, :arrival_time, :plan_id, :position, :done)
     end
 end
