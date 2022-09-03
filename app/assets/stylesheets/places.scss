@@ -17,7 +17,7 @@
     margin: 0;
     padding: 0;
     width: 550px;
-    height: 670px;
+    height: 600px;
 }
 
 #info-window-name:hover {
@@ -27,12 +27,13 @@
 
 // 中央==============================
 #center-container {
-    width: 430px;
-    height: 670px;
+    width: 410px;
+    height: 600px;
     background-image: url("man-2.png");
-    background-position: -50px 430px;
+    background-position: -50px 350px;
     background-repeat: no-repeat;
     background-size: 250px;
+    margin: 10px;
 }
 
 #plan-canvas {
@@ -50,7 +51,7 @@
     left: 0;
     margin: 0;
     padding: 0 0 10px 0;
-    width: 430px;
+    width: 410px;
     height: 560px;
 }
 #spot-search-top {
@@ -121,7 +122,7 @@
     margin: 0;
     padding: 5px;
     width: 450px;
-    height: 620px;
+    height: 570px;
     background-color: #F3FFD8;
 }
 
