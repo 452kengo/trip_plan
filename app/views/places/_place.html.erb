@@ -1,14 +1,14 @@
-      <div id="route-spot">
-        <p id="route-list" class="list-group"><%= place.name %></p>
-        <p id="place-address"><%= place.address %></p>
-        <div id="staying-time" class="form-inline" role="form">
+      <div class="route-spot" data-lat="<%= place.latitude %>" data-lng="<%= place.longitude %>">
+        <p class="list-group"><%= place.name %></p>
+        <p class="place-address"><%= place.address %></p>
+        <div class="staying-time form-inline" role="form">
             <P class="times"><%= place.departure_time.strftime( "%H:%M" ) %></P>
             <P class="times">-</p>
             <P class="times"><%= place.arrival_time.strftime( "%H:%M" ) %></p>
         </div>
-        <div id="btn-place">
+        <div class="btn-place">
             <div><%= link_to '編集', edit_plan_place_path(place.plan, place), class: "spot-edit", remote: true %></div>
             <div><%= link_to '削除', plan_place_path(place.plan, place), method: :delete, class: "spot-delete", remote: true %></div>
         </div>
-        <div id="place-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+        <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
       </div>

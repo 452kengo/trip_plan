@@ -155,14 +155,14 @@
 
 
 // 保存した場所place
-#route-spot {
+.route-spot {
     position: relative;
     background-color: #F3FFD8;
     border: solid 3px #559966;
     margin: 5px;
     padding: 5px 0 0 5px;
 }
-#route-spot:after {
+.route-spot:after {
     position: absolute;
     content: " ";
     display: block;
@@ -171,15 +171,24 @@
     left: 0px;
     width: 30%;
 }
+
+.route-spec {
+    position: relative;
+    background-color: #DDDD99;
+    border-left: solid 3px #AA7722;
+    margin: 5px;
+    padding: 8px 0 8px 5px;
+}
+
 .list-group {
     font-weight: bold;
 }
-#place-address {
+.place-address {
     font-size: 12px;
     margin: 5px;
 }
 
-#staying-time {
+.staying-time {
     display: flex;
 }
 

@@ -3,12 +3,12 @@
     <div id="plan-title" class="plan-title-area px-3 text-center">
       <h1>MYプラン</h1>
       <div>
-      <%= link_to new_plan_path, title: "新規プラン作成", id: "btn-new-plan", class: "btn p-2", remote: true do %>
+      <%= link_to new_plan_path, id: "btn-new-plan", class: "btn p-2", remote: true do %>
         <i class="fas fa-plus align-middle pr-1"></i><span class="align-middle">新規プラン作成</span>
       <% end %>
       </div>
     </div>
-    <div class="plan-index-area pt-3 p-1 w-50 text-center" id="plansIndex">
+    <div class="plan-index pt-3 p-1 w-50 text-center">
       <%= render @plans %>
     </div>
   </div>

@@ -46,12 +46,10 @@
   <!--右側-->
   <div>
     <div id="map-route" class="place-cards">
-      <ul id="route-list" class="list-group"></ul>
       <%= render @places %>
     </div>
     <div id="map-search">
       <%= button_tag "ルート検索", id: "btn-search", class: "btn", onclick: "search()" %>
-      <div id="distance-time"></div>
     </div>
   </div>
 </div>
@@ -100,7 +98,7 @@ function initMap(){
       place_lng[i]= markerData[i]['longitude'];
       infoWindow[i] = new google.maps.InfoWindow({
         // 吹き出しの中身, 引数で各属性の配列と配列番号を渡す
-        content: `<a>${ markerData[i]['name'] }</a><input type="button" value="追加" onclick="addPlace(place_name, place_lat, place_lng, ${i})">`
+        content: `<a>${ markerData[i]['name'] }</a>`
       });
       markerEvent(i);
     }
@@ -148,35 +146,11 @@ function codeAddress() {
     });
 }
 
-// リストに追加する
-function addPlace(name, lat, lng, number){
-  var li = $('<li>', {
-    text: name[number],
-    "class": "list-group-item"
-  });
-  li.attr("data-lat", lat[number]); // data-latという属性にlat[number]を入れる
-  li.attr("data-lng", lng[number]); // data-lngという属性にlng[number]を入れる
-  $('#route-list').append(li); // idがroute-listの要素の一番後ろにliを追加
 
-  // 重複チェックしてリストに追加
-  if(!isExistList(li)) {
-    $('#route-list').append(li);
-  }
-}
-// リストの重複をチェックする
-function isExistList(li) {
-    var exist = false;
-    $('#route-list li').each(function() {
-        if($(this).text() == $(li).text()) {
-            exist = true;
-        }
-    })
-    return exist;
-}
 
 // ルートを検索する
 function search() {
-  var points = $('#route-list li');
+  var points = $('#map-route .route-spot');
 
   // 2地点以上のとき
   if (points.length >= 2){
@@ -186,13 +160,13 @@ function search() {
 
       // origin, destination, waypointsを設定する
       for (var i = 0; i < points.length; i++) {
-          points[i] = new google.maps.LatLng($(points[i]).attr("data-lat"), $(points[i]).attr("data-lng"));
+          const latlng = new google.maps.LatLng($(points[i]).attr("data-lat"), $(points[i]).attr("data-lng"));
           if (i == 0){
-            origin = points[i];
+            origin = latlng;
           } else if (i == points.length-1){
-            destination = points[i];
+            destination = latlng;
           } else {
-            waypoints.push({ location: points[i], stopover: true });
+            waypoints.push({ location: latlng, stopover: true });
           }
       }
       // リクエストの作成
@@ -209,7 +183,7 @@ function search() {
             map: map,
             suppressMarkers : true,
             polylineOptions: { // 描画される線についての設定
-              strokeColor: '#CC3333',
+              strokeColor: '#EE5533',
               strokeOpacity: 1,
               strokeWeight: 5
             }
@@ -218,34 +192,11 @@ function search() {
             // 距離、時間を表示する
             var data = response.routes[0].legs;
             for (var i = 0; i < data.length; i++) {
-                // 距離
-                var li = $('<li>', {
-                  text: data[i].distance.text,
-                  "class": "display-group-item"
-                });
-                $('#display-list').append(li);
-
-                // 時間
-                var li = $('<li>', {
-                  text: data[i].duration.text,
-                  "class": "display-group-item"
-                });
-                $('#display-list').append(li);
-            }
-            const route = response.routes[0];
-            // ビューのid='directions-panel'の部分に埋め込む
-            const summaryPanel = document.getElementById("distance-time");
-            summaryPanel.innerHTML = "";
-
-            // 各地点間の距離・時間を表示
-            for (let i = 0; i < route.legs.length; i++) {
-              const routeSegment = i + 1;
-              summaryPanel.innerHTML +=
-                "<b>Route Segment: " + routeSegment + "</b><br>";
-              summaryPanel.innerHTML += route.legs[i].start_address + "<br>" + " ↓ " + "<br>";
-              summaryPanel.innerHTML += route.legs[i].end_address + "<br>";
-              summaryPanel.innerHTML += "<" + route.legs[i].distance.text + ",";
-              summaryPanel.innerHTML += route.legs[i].duration.text + ">" + "<br>";
+              const routeSpecText = data[i].distance.text  + "," + data[i].duration.text
+                const div = $("<div></div>", {
+                  class: 'route-spec',
+                  text: routeSpecText })
+                $(points[i]).after(div)
             }
         }
       });

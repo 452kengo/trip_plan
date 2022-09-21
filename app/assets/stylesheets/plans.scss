@@ -21,7 +21,7 @@
     background: linear-gradient(transparent 70%, #559966 70%);
 }
 
-#plansIndex {
+.plan-index {
     margin: 0 auto;
 }
 
@@ -32,7 +32,6 @@
 #btn-new-plan:hover {
     background-color: #EE5533;
     color: #FFF;
-    text-decoration: underline;
 }
 
 .plan-card {
@@ -51,17 +50,17 @@
     text-decoration: underline;
 }
 
-#btn-plan-edit:hover {
+.btn-plan-edit:hover {
     background-color: #FFEE55;
     color: #FFF;
     padding: 5px;
 } 
 
-#btn-plan-delete {
+.btn-plan-delete {
     color: #EE5533;
 }
-#btn-plan-edit-dropdown:hover,
-#btn-plan-delete:hover {
+.btn-plan-edit-dropdown:hover,
+.btn-plan-delete:hover {
     background-color: #AA7722;
     color: #FFF;
 }

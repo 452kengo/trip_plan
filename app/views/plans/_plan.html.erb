@@ -10,15 +10,15 @@
       </div>
       <div class="text-right position-absolute" style="top: 4px; right: 4px">
         <% unless current_user == nil then %>
-          <%= link_to "編集", plan_places_path(plan), title: "編集", id: "btn-plan-edit", class: "btn" %>
+          <%= link_to "編集", plan_places_path(plan), class: "btn-plan-edit btn" %>
         <% end %>
         <div class="btn-group">
           <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-ellipsis-v align-middle"></i>
           </button>
           <div class="dropdown-menu dropdown-menu-left text-middle">
-            <%= link_to "プラン名・日程を変える", edit_plan_path(plan), id: "btn-plan-edit-dropdown", class: "dropdown-item", remote: true %>
-            <%= link_to "削除", plan, method: :delete, id: "btn-plan-delete", class: "dropdown-item", remote: true %>
+            <%= link_to "プラン名・日程を変える", edit_plan_path(plan), class: "btn-plan-edit-dropdown dropdown-item", remote: true %>
+            <%= link_to "削除", plan, method: :delete, class: "btn-plan-delete dropdown-item", remote: true %>
           </div>
         </div>
       </div>
