@@ -67,10 +67,15 @@ var place_result
 
 // GoogleMapを表示する関数(callback処理で呼び出される)
 function initMap(){
+  
+  navigator.geolocation.getCurrentPosition(function (position) {
+    // 現在地を取得
+    currentLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+  
     geocoder = new google.maps.Geocoder()
     // ビューのid='map_index'の部分にGoogleMapを埋め込む
     map = new google.maps.Map(document.getElementById('map'), {
-      center: { lat: 35.6585, lng: 139.7486 }, // 東京タワーを中心
+      center: currentLocation, 
       zoom: 12,
     });
     
@@ -102,6 +107,7 @@ function initMap(){
       });
       markerEvent(i);
     }
+  });
 }
 
 // マーカーをクリックしたら吹き出しを表示
