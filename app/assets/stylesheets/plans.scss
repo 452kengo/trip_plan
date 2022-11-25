@@ -22,7 +22,34 @@
 }
 
 .plan-index {
+    position: relative;
     margin: 0 auto;
+}
+
+// ページネーション
+.pagination {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 15px;
+}
+/*ページネーション自体のデザイン*/
+.pagination>li>a {          
+  border: none;     /*枠線をなくす*/
+  color: #696969;   /*文字の色を変える*/
+}
+
+/* 表示しているページ番号のデザイン */
+.pagination>.active>a {     
+  border-radius: 15px;     /*角を丸くする*/
+}
+.page-item.active .page-link {
+    background-color: #AA7722;
+}
+
+.pagination>li>a:hover {        
+  border-radius: 15px;    /*角を丸くする*/
 }
 
 // _plan

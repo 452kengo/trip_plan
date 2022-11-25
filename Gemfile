@@ -82,3 +82,5 @@ gem 'gon'
 gem 'acts_as_list', '~> 0.9.19'
 
 gem 'rails-i18n'
+
+gem 'kaminari'

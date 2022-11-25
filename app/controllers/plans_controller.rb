@@ -4,7 +4,7 @@ class PlansController < ApplicationController
 
   # GET /plans or /plans.json
   def index
-    @plans = current_user.plans.all.order("plan_date DESC")
+    @plans = current_user.plans.all.page(params[:page]).per(10)
   end
 
   # GET /plans/1 or /plans/1.json
