@@ -84,3 +84,7 @@ gem 'acts_as_list', '~> 0.9.19'
 gem 'rails-i18n'
 
 gem 'kaminari'
+
+group :production do
+  gem 'unicorn', '5.4.1'
+end
