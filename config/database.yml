@@ -22,7 +22,6 @@ test:
 
 production:
   <<: *default
-  adapter: postgresql
   database: trip_plan_production
   username: root
   password: <%= ENV['DATABASE_PASSWORD'] %>
