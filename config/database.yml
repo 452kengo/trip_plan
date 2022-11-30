@@ -24,6 +24,6 @@ production:
   <<: *default
   adapter: postgresql
   database: trip_plan_production
-  username: 452kengo
+  username: root
   password: <%= ENV['DATABASE_PASSWORD'] %>
   socket: /var/lib/mysql/mysql.sock
